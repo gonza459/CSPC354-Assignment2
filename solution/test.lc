@@ -1,0 +1,51 @@
+val newCList = \e.
+    let val a = new [] in
+    a := [e,a];
+    a;;
+
+-- complete the following functions
+
+val insert = \e. \a.
+      let val b = new [] in
+      case !a of {
+      [e', a'] ->
+      b := [e, a'];
+      a := [e',b]
+      };
+      a ;;
+
+rec toListAux = \h. \b. case b == h of {
+        true -> [] ,
+        false -> case !b of {
+            [v, b'] -> v : (toListAux h b')
+        }
+};;
+
+val cListToList = \a. case !a of {
+    [v, a'] -> v : (toListAux a a')
+};;
+val testInsert1 =
+    let val l = newCList "a" in
+    insert "b" l;
+    cListToList l == ["a", "b"]
+;;
+val testInsert2 =
+    let val l = newCList "a" in
+    insert "c" l;
+    insert "b" l;
+    cListToList l == ["a", "b", "c"]
+;;
+-- val delete = \a.
+
+
+val next = \a.
+    case !a of {
+    [e,a'] -> a'
+    } ;;
+
+val get = \a.
+    case !a of {
+      [e,a'] -> e
+    } ;;
+
+-- val update = \e. \a.
